@@ -57,18 +57,9 @@ export class CacheConfig {
     let key = core.getInput("prefix-key") || "v0-rust";
 
     const sharedKey = core.getInput("shared-key");
+    
     if (sharedKey) {
       key += `-${sharedKey}`;
-    } else {
-      const inputKey = core.getInput("key");
-      if (inputKey) {
-        key += `-${inputKey}`;
-      }
-
-      const job = process.env.GITHUB_JOB;
-      if (job) {
-        key += `-${job}`;
-      }
     }
 
     self.keyPrefix = key;
@@ -106,9 +97,9 @@ export class CacheConfig {
       }
     }
 
-    self.keyEnvs = keyEnvs;
+    self.keyEnvs = [];
 
-    key += `-${digest(hasher)}`;
+    //key += `-${digest(hasher)}`;
 
     self.restoreKey = key;
 
@@ -228,9 +219,9 @@ export class CacheConfig {
     let lockHash = digest(hasher);
 
     keyFiles.push(...parsedKeyFiles);
-    self.keyFiles = sort_and_uniq(keyFiles);
+    self.keyFiles = [];
 
-    key += `-${lockHash}`;
+    //key += `-${lockHash}`;
     self.cacheKey = key;
 
     self.cachePaths = [CARGO_HOME];
